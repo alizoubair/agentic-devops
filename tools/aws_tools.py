@@ -202,15 +202,15 @@ def _derive_health(service_type: str, name: str, detail: dict, region: str) -> s
         running, desired = detail.get("running", 0), detail.get("desired", 0)
         if running < desired:
             health = "degraded" if running > 0 else "critical"
-            findings.append(f"⚠️  Running ({running}) < Desired ({desired})")
+            findings.append(f"Running ({running}) < Desired ({desired})")
             recommendations.append("Check CloudWatch Logs for task failure details")
         else:
-            findings.append(f"✅ Running ({running}) == Desired ({desired})")
+            findings.append(f"Running ({running}) == Desired ({desired})")
         for evt in detail.get("recent_events", [])[:3]:
             msg = evt.get("message", "")
             if any(w in msg.lower() for w in ("fail", "error", "stopped", "exit")):
                 health = "degraded" if health == "healthy" else health
-                findings.append(f"⚠️  Event: {msg[:120]}")
+                findings.append(f"Event: {msg[:120]}")
     
     return _wrap(
         {"resource": name, "service_type": service_type, "region": region,
@@ -219,10 +219,10 @@ def _derive_health(service_type: str, name: str, detail: dict, region: str) -> s
     )
 
 # ---------------------------------------------------------------------------
-# Tool registry — imported by agent.py
+# Tool registry for AWS Infrastructure Agent (Strands-based)
 # ---------------------------------------------------------------------------
 
-ALL_TOOLS = [
+AWS_TOOLS = [
     list_aws_resources,
     describe_resource,
     check_resource_health
