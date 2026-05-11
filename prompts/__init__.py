@@ -1,3 +1,3 @@
-from .system_prompts import SYSTEM_PROMPT
+from .system_prompts import AWS_INFRASTRUCTURE_PROMPT, REPOSITORY_ANALYSIS_PROMPT
 
-__all__ = ["SYSTEM_PROMPT"]
+__all__ = ["AWS_INFRASTRUCTURE_PROMPT", "REPOSITORY_ANALYSIS_PROMPT"]
